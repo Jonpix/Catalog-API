@@ -9,7 +9,7 @@ namespace Catalog_API.Repositories
 {
     public class InMemoryItemsRepository : IItemsRepository
     {
-        private readonly IList<Item> items = new List<Item>()
+        private List<Item> items = new List<Item>()
         {
             new Item{ Id=Guid.NewGuid(), Name = "Potion", Price = 9 ,CreatedDate = DateTimeOffset.UtcNow },
             new Item{ Id=Guid.NewGuid(), Name = "Iron Sword", Price = 20 ,CreatedDate = DateTimeOffset.UtcNow },
@@ -26,5 +26,21 @@ namespace Catalog_API.Repositories
             return items.SingleOrDefault(x => x.Id == id);
         }
 
+        public void CreateItem(Item item)
+        {
+            items.Add(item);
+        }
+
+        public void UpdateItem(Item item)
+        {
+            var index = items.FindIndex(existingItem => existingItem.Id == item.Id);
+            items[index] = item;
+        }
+
+        public void DeleteItem(Guid id)
+        {
+            var index = items.FindIndex(existingItem => existingItem.Id == id);
+            items.RemoveAt(index);
+        }
     }
 }

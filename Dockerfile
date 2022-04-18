@@ -5,8 +5,8 @@ EXPOSE 80
 ENV ASPNETCORE_URLS=http://+:80
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0-focal AS build
-WORKDIR /src
-COPY ["Catalog API/Catalog API.csproj", "./"]
+WORKDIR /src/Catalog_API
+COPY ["Catalog API.csproj", "./"]
 RUN dotnet restore "Catalog API.csproj"
 WORKDIR /src
 COPY . .

@@ -8,7 +8,6 @@ FROM mcr.microsoft.com/dotnet/sdk:5.0-focal AS build
 WORKDIR /src/Catalog_API
 COPY ["Catalog API.csproj", "./"]
 RUN dotnet restore "Catalog API.csproj"
-WORKDIR /src
 COPY . .
 RUN dotnet publish "Catalog API.csproj" -c Release -o /app/publish /p:UseAppHost=false
 

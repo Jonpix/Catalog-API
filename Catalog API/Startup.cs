@@ -43,7 +43,7 @@ namespace Catalog_API
 
             services.AddSingleton<IItemsRepository, MongoDbItemsRepository>();
 
-            services.AddControllers();
+            services.AddControllers(options => { options.SuppressAsyncSuffixInActionNames = false; });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Catalog_API", Version = "v1" });

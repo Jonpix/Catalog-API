@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Catalog_API.Extensions;
+using Microsoft.Extensions.Logging;
 
 namespace Catalog_API.Controllers
 {
@@ -16,10 +17,11 @@ namespace Catalog_API.Controllers
     public class ItemsController : ControllerBase
     {
         private readonly IItemsRepository repository;
-
-        public ItemsController(IItemsRepository injectedRepository)
+        private readonly ILogger<ItemsController> logger;
+        public ItemsController(IItemsRepository injectedRepository, ILogger<ItemsController> logger)
         {
             repository = injectedRepository;
+            this.logger = logger;
         }
 
         [HttpGet]
@@ -27,6 +29,9 @@ namespace Catalog_API.Controllers
         {
             var items = (await repository.GetItemsAsync())
                         .Select(item => item.GetItemAsDTO());
+
+            logger.LogInformation($"{DateTimeOffset.UtcNow.ToString("hh:mm:ss")} Reteived {items.Count()} items");
+
             return items;
         }
 
